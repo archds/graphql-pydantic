@@ -61,4 +61,3 @@ def convert_to_models(gql_objects: List[GQLType]) -> List[BaseModel]:
         convert_to_model(gql_object)
         for gql_object in gql_objects
     ]
-

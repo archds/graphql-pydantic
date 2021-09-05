@@ -1,15 +1,11 @@
 from pathlib import Path
 from typing import Union, List, Dict
 
-from datamodel_code_generator import InputFileType, generate
+from datamodel_code_generator import InputFileType, generate, LiteralType
 from pydantic.main import ModelMetaclass, BaseModel, create_model
 
 from core.gql_model import convert_to_models
 from core.gql_schema import get_gql_objects
-
-BASE_DIR = Path.cwd()
-SCHEMA_DIR = BASE_DIR / 'schema'
-SCHEMA_DIR.mkdir(exist_ok=True)
 
 
 def generate_json_schema(gql_models: List[BaseModel]) -> str:
@@ -46,7 +42,10 @@ def codegen_to_file(schema: Union[str, Path], result: Union[str, Path]) -> None:
     generate(
         generate_json_schema(gql_models),
         input_file_type=InputFileType.JsonSchema,
-        output=result
+        output=result,
+        snake_case_field=True,
+        enum_field_as_literal=LiteralType.All,
+        reuse_model=True
     )
 
 
